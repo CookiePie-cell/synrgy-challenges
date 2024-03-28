@@ -6,7 +6,7 @@ public abstract class Menu {
     protected  Boolean isOrdered;
 
 
-    public Menu(String food, Integer price, Boolean isOrdered) {
+    protected Menu(String food, Integer price, Boolean isOrdered) {
         this.food = food;
         this.price = price;
         this.isOrdered = isOrdered;

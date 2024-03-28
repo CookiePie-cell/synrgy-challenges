@@ -3,12 +3,13 @@ package challenge;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Restaurant {
 
     private final PaymentReceiptGenerator paymentReceiptGenerator;
-    private final ArrayList<Menu> menus;
+    private final List<Menu> menus;
     private Boolean hasOrdered = false;
     private final Scanner sc;
     public Restaurant(PaymentReceiptGenerator paymentReceiptGenerator, Scanner sc) {
@@ -23,7 +24,7 @@ public class Restaurant {
         ));
     }
 
-    public Restaurant(PaymentReceiptGenerator paymentReceiptGenerator, ArrayList<Menu> menus, Scanner sc) {
+    public Restaurant(PaymentReceiptGenerator paymentReceiptGenerator, List<Menu> menus, Scanner sc) {
         this.sc = sc;
         this.paymentReceiptGenerator = paymentReceiptGenerator;
         this.menus = menus;
