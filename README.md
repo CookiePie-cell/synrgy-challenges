@@ -1,1 +1,1 @@
-﻿# SYNRGY - Challenges
+SYNRGY - Challenges
