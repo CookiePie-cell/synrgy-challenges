@@ -7,11 +7,9 @@ di BinarFud
 
 Dibawah ini adalah pesanan anda
 
-Nasi goreng	1	20000
-Mie goreng	5	75000
-Soto ayam	3	51000
+Nasi goreng	2	40000
 ----------------------+
-Total		9	146000
+Total		2	40000
 
 Pembayaran : BinarCash
 
