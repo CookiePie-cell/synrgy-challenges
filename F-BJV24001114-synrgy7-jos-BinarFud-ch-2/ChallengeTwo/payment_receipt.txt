@@ -7,9 +7,10 @@ di BinarFud
 
 Dibawah ini adalah pesanan anda
 
-Nasi goreng	2	40000
+Bubur ayam	1	10000
+Soto ayam	2	34000
 ----------------------+
-Total		2	40000
+Total		3	44000
 
 Pembayaran : BinarCash
 

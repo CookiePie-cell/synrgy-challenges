@@ -8,11 +8,11 @@ import java.util.Scanner;
 
 public class Restaurant {
 
-    private final PaymentReceiptGenerator paymentReceiptGenerator;
+    private final ReceiptGenerator paymentReceiptGenerator;
     private final List<Menu> menus;
     private Boolean hasOrdered = false;
     private final Scanner sc;
-    public Restaurant(PaymentReceiptGenerator paymentReceiptGenerator, Scanner sc) {
+    public Restaurant(ReceiptGenerator paymentReceiptGenerator, Scanner sc) {
         this.sc = sc;
         this.paymentReceiptGenerator = paymentReceiptGenerator;
         this.menus = new ArrayList<>(Arrays.asList(
@@ -24,7 +24,7 @@ public class Restaurant {
         ));
     }
 
-    public Restaurant(PaymentReceiptGenerator paymentReceiptGenerator, List<Menu> menus, Scanner sc) {
+    public Restaurant(ReceiptGenerator paymentReceiptGenerator, List<Menu> menus, Scanner sc) {
         this.sc = sc;
         this.paymentReceiptGenerator = paymentReceiptGenerator;
         this.menus = menus;
@@ -136,6 +136,7 @@ public class Restaurant {
                         this.paymentReceiptGenerator.readPaymentReceiptFromFile();
                     } catch (IOException e) {
                         System.err.println("Terjadi kesalahan saat menyimpan struk pembayaran: " + e.getMessage());
+                        showOrderConfirmationMenu();
                     }
                     break;
                 } else if (input == 2) {
