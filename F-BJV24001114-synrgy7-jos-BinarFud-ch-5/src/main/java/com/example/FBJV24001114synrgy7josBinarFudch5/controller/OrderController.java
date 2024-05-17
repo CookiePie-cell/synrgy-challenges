@@ -7,6 +7,8 @@ import com.example.FBJV24001114synrgy7josBinarFudch5.projection.OrderDetailProje
 import com.example.FBJV24001114synrgy7josBinarFudch5.service.InvoiceService;
 import com.example.FBJV24001114synrgy7josBinarFudch5.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,17 +58,19 @@ public class OrderController {
                         .build());
     }
 
-    @PostMapping(
-            path = "/api/orders/{userId}",
-            produces = MediaType.APPLICATION_JSON_VALUE
+    @GetMapping(
+            path = "/api/orders/{userId}"
     )
-    public ResponseEntity<ApiResponse<String>> generateInvoice(@PathVariable("userId") UUID userId) {
-        invoiceService.generateInvoice(userId);
+    public ResponseEntity<byte[]> generateInvoice(@PathVariable("userId") UUID userId) {
+        byte[] pdfData = invoiceService.generateInvoice(userId);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDisposition(ContentDisposition.builder("attachment").filename("invoice.pdf").build());
+
         return ResponseEntity
                 .ok()
-                .body(ApiResponse.<String>builder()
-                        .statusCode(200)
-                        .data("Success")
-                        .build());
+                .headers(headers)
+                .body(pdfData);
     }
 }

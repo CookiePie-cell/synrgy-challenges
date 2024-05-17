@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -35,7 +36,7 @@ public class InvoiceServiceImpl implements InvoiceService{
     }
 
     @Override
-    public void generateInvoice(UUID userId) {
+    public byte[] generateInvoice(UUID userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
@@ -49,13 +50,16 @@ public class InvoiceServiceImpl implements InvoiceService{
             Map<String, Object> parameters = new HashMap<>();
             parameters.put("customerName", user.getUsername());
             JasperPrint print = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
-            String outputFile = System.getProperty("user.home") + File.separator + "Downloads" + File.separator + "invoice.pdf";
-            JasperExportManager.exportReportToPdfFile(print, outputFile);
-            System.out.println("Report created...");
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            JasperExportManager.exportReportToPdfStream(print, byteArrayOutputStream);
+
+            return byteArrayOutputStream.toByteArray();
         } catch (FileNotFoundException | JRException e) {
             throw new RuntimeException(e);
         }
     }
+
 
     private InvoiceData mapProjectionToDto(OrderDetailProjection projection) {
         return InvoiceData.builder()

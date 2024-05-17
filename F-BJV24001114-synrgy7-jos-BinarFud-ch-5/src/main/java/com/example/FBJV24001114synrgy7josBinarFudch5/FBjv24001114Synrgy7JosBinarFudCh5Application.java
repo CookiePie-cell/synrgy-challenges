@@ -1,9 +1,11 @@
 package com.example.FBJV24001114synrgy7josBinarFudch5;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+@OpenAPIDefinition
 public class FBjv24001114Synrgy7JosBinarFudCh5Application {
 
 	public static void main(String[] args) {
