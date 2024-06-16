@@ -1,10 +1,8 @@
 package challenge;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.function.Supplier;
 
 public class Restaurant {
 
@@ -22,6 +20,7 @@ public class Restaurant {
                 new FoodItem("Soto ayam", 17000, false),
                 new FoodItem("Gado-gado", 10000, false)
         ));
+        this.menus.sort(Comparator.comparing(Menu::getPrice));
     }
 
     public Restaurant(ReceiptGenerator paymentReceiptGenerator, List<Menu> menus, Scanner sc) {
@@ -104,22 +103,21 @@ public class Restaurant {
         System.out.println("\n==========================");
         System.out.println("Konfirmasi pembayaran");
         System.out.println("==========================\n");
-        int totalQty = 0;
-        int totalPrice = 0;
-        for (Menu menu : menus) {
+        int[] totals = {0, 0}; // Index 0: totalQty, Index 1: totalPrice
+        menus.forEach(menu -> {
             FoodItem item = (FoodItem) menu;
             if (item.getIsOrdered()) {
                 String food = item.getFood();
                 int quantity = item.getQuantity();
                 int totalPricePerMenu = item.getTotalPrice();
                 System.out.println(food + "\t" + quantity + "\t" + totalPricePerMenu);
-                totalQty += quantity;
-                totalPrice += totalPricePerMenu;
+                totals[0] += quantity;
+                totals[1] += totalPricePerMenu;
             }
-        }
+        });
 
         System.out.println("----------------------+");
-        System.out.println("Total" + "\t\t" + totalQty + "\t" + totalPrice + "\n");
+        System.out.println("Total" + "\t\t" + totals[0] + "\t" + totals[1] + "\n");
 
         System.out.println("1. Konfirmasi pembayaran");
         System.out.println("2. Kembali ke menu utama");
@@ -132,10 +130,10 @@ public class Restaurant {
                 if (input == 0) break;
                 else if (input == 1) {
                     try {
-                        this.paymentReceiptGenerator.generatePaymentReceipt(totalQty, totalPrice, menus);
+                        this.paymentReceiptGenerator.generatePaymentReceipt(totals[0], totals[1], menus);
                         this.paymentReceiptGenerator.readPaymentReceiptFromFile();
                     } catch (IOException e) {
-                        System.err.println("Terjadi kesalahan saat menyimpan struk pembayaran: " + e.getMessage());
+                        System.err.println("Terjadi kesalahan saat menyimpan struk pembayaran. Silahkan coba lagi.");
                         showOrderConfirmationMenu();
                     }
                     break;

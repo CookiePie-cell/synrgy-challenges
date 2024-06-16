@@ -61,13 +61,29 @@ public class RestaurantTest {
         assertTrue(outContent.toString().contains("=========================="));
         assertTrue(outContent.toString().contains("\n")); // New line character for formatting
 
+
         assertTrue(outContent.toString().contains("Silahkan pilih makanan : "));
         assertTrue(outContent.toString().contains("1. Nasi goreng\t\t20000"));
         assertTrue(outContent.toString().contains("2. Mie goreng\t\t15000"));
         assertTrue(outContent.toString().contains("3. Bubur ayam\t\t10000"));
         assertTrue(outContent.toString().contains("99. Pesan dan bayar"));
         assertTrue(outContent.toString().contains("0. Keluar aplikasi"));
-
+        String expected = """
+                ==========================
+                Selamat datang di BinarFud
+                ==========================
+                
+                Silahkan pilih makanan :
+                1. Nasi goreng\t\t20000
+                2. Mie goreng\t\t15000
+                3. Bubur ayam\t\t10000
+                99. Pesan dan bayar
+                0. Keluar aplikasi
+                
+                =>
+                """;
+        String actual = outContent.toString().trim();
+        assertEquals(expected, actual);
         assertTrue(outContent.toString().contains("=> "));
     }
 
